@@ -1,12 +1,12 @@
 //function to calculate the total word count 
 function calculateTotalWordCount(textInput) {
 	var inputWords = textInput.split(" ");
-	var uniqueWords = calculateUniqueWords(inputWords);
 	return inputWords.length;
 }
 
 //function to calculate the unique words submitted
-function calculateUniqueWords(inputWords) {
+function calculateUniqueWords(textInput) {
+	var inputWords = textInput.split(" ");
 	var sortedWords = inputWords.sort();
 	var finalUniqueList = []
 	for (i = 0; i <= sortedWords.length; i++) {
@@ -14,8 +14,8 @@ function calculateUniqueWords(inputWords) {
 			finalUniqueList.push(sortedWords[i])
 		}
 	}
-	console.log("final uniqueWords list " + finalUniqueList)
-	console.log(finalUniqueList.length);
+	//console.log("final uniqueWords list " + finalUniqueList)
+	//console.log(finalUniqueList.length);
 	return finalUniqueList.length;
 };
 
@@ -24,7 +24,7 @@ function calculateUniqueWords(inputWords) {
 function calculateWordLength(textInput, wordCount) {
 	var totalCharacters = textInput.split(' ').join('');
 	//return the length property of the array and divide it by the word count
-	console.log(totalCharacters.length/wordCount);
+	//console.log(totalCharacters.length/wordCount);
 	return totalCharacters.length/wordCount;
 }
 
@@ -35,19 +35,21 @@ function submitForm () {
 		event.preventDefault();
 		var textInput = $("textarea").val().toLowerCase().replace(/[.,?\/#!$%\^&\*;:{}=\-_'`~()]/g,"");
 		var wordCount = calculateTotalWordCount(textInput);
+		var uniqueWords = calculateUniqueWords(textInput);
 		var avgWordLength = calculateWordLength(textInput,wordCount);
-		console.log(wordCount);
-		displayResults(wordCount);
-
-		
+		//console.log(wordCount, uniqueWords, avgWordLength);
+		displayResults(wordCount, uniqueWords, avgWordLength);
 	});
 }
 
 //function to display the results 
-function displayResults() {
-	$('.text-report').removeClass("hidden")}
-	$('dd .count').text('wordCount');
-	
+function displayResults(wordCount, uniqueWords, avgWordLength) {
+	console.log(wordCount, uniqueWords, avgWordLength);
+	$('.text-report').removeClass('hidden');
+	$('dd[class="count"]').text(wordCount);
+	$('dd[class="unique"]').text(uniqueWords);
+	$('dd[class="avg"]').text(avgWordLength.toFixed(2));
+};	
 
 //call the submit form function
 $(function() {
